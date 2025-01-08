@@ -1,40 +1,36 @@
-'use client';
+"use client";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 
-export default function LoginPage() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+export default function Login() {
+    const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
+
         const result = await signIn("credentials", {
-            username,
+            email,
             password,
             redirect: false,
         });
 
-        if (result?.error) {
-            alert("Login failed: " + result.error);
+        if (!result?.ok) {
+            setError("Invalid email or password");
         } else {
-            alert("Login successful!");
+            setError(null);
+            window.location.href = "/dashboard";
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+        <form onSubmit={handleLogin}>
+            <h1>Login</h1>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="password" name="password" placeholder="Password" required />
             <button type="submit">Login</button>
         </form>
     );

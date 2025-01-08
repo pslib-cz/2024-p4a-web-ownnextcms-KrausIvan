@@ -17,6 +17,7 @@ export const authOptions = {
             },
             async authorize(credentials) {
                 console.log("[authorize] Received credentials:", credentials);
+
                 if (!credentials?.email || !credentials?.password) {
                     throw new Error("Missing email or password");
                 }
@@ -30,10 +31,10 @@ export const authOptions = {
                     throw new Error("User not found");
                 }
 
-                const isPasswordValid = await bcrypt.compare(
-                    credentials.password,
-                    user.password
-                );
+                // Check if user has password
+                const isPasswordValid = user.password
+                    ? await bcrypt.compare(credentials.password, user.password)
+                    : false;
                 console.log("[authorize] Password validation result:", isPasswordValid);
 
                 if (!isPasswordValid) {
@@ -66,6 +67,8 @@ export const authOptions = {
 
             if (account?.provider === "github") {
                 console.log("[jwt] Handling GitHub account:", account);
+
+                // Fetch or create user using GitHub login
                 const existingUser = await prisma.user.findUnique({
                     where: { email: token.email },
                 });
@@ -106,6 +109,8 @@ export const authOptions = {
                             email: token.email,
                             name: token.name,
                             image: token.picture,
+                            // Assuming new fields for password, if applicable
+                            password: "", // Consider how you want to handle this
                         },
                     });
                     console.log("[jwt] New user created:", newUser);

@@ -1,4 +1,5 @@
 "use client";
+import { signIn } from "next-auth/react";
 import { useState } from "react";
 
 export default function Register() {
@@ -26,13 +27,23 @@ export default function Register() {
     };
 
     return (
-        <form onSubmit={handleRegister}>
-            <h1>Register</h1>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <input type="text" name="username" placeholder="Username" required />
-            <input type="email" name="email" placeholder="Email" required />
-            <input type="password" name="password" placeholder="Password" required />
-            <button type="submit">Register</button>
-        </form>
+        <div>
+            <form onSubmit={handleRegister}>
+                <h1>Register</h1>
+                {error && <p style={{color: "red"}}>{error}</p>}
+                <input type="text" name="username" placeholder="Username" required/>
+                <input type="email" name="email" placeholder="Email" required/>
+                <input type="password" name="password" placeholder="Password" required/>
+                <button type="submit">Register</button>
+            </form>
+            <button
+                onClick={() =>
+                    signIn("github", {callbackUrl: "/login?isNewUser=true"})
+                }
+            >
+                Register with GitHub
+            </button>
+
+        </div>
     );
 }

@@ -26,12 +26,21 @@ export default function Login() {
     };
 
     return (
-        <form onSubmit={handleLogin}>
-            <h1>Login</h1>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <input type="email" name="email" placeholder="Email" required />
-            <input type="password" name="password" placeholder="Password" required />
-            <button type="submit">Login</button>
-        </form>
+        <div>
+            <form onSubmit={handleLogin}>
+                <h1>Login</h1>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                <input type="email" name="email" placeholder="Email" required />
+                <input type="password" name="password" placeholder="Password" required />
+                <button type="submit">Login</button>
+            </form>
+            <button
+                onClick={() =>
+                    signIn("github", {callbackUrl: "/dashboard"})
+                }
+            >
+                Login with GitHub
+            </button>
+        </div>
     );
 }

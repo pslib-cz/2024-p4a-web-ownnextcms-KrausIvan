@@ -31,7 +31,6 @@ export const authOptions = {
                     throw new Error("User not found");
                 }
 
-                // Check if user has password
                 const isPasswordValid = user.password
                     ? await bcrypt.compare(credentials.password, user.password)
                     : false;
@@ -51,10 +50,10 @@ export const authOptions = {
     ],
     secret: process.env.AUTH_SECRET,
     session: {
-        strategy: "jwt",
+        strategy: "jwt" as const,
     },
     callbacks: {
-        async jwt({ token, user, account }) {
+        async jwt({ token, user, account }: { token: any; user?: any; account?: any }) {
             console.log("[jwt] Incoming token:", token);
             console.log("[jwt] Incoming user:", user);
             console.log("[jwt] Incoming account:", account);
@@ -68,7 +67,6 @@ export const authOptions = {
             if (account?.provider === "github") {
                 console.log("[jwt] Handling GitHub account:", account);
 
-                // Fetch or create user using GitHub login
                 const existingUser = await prisma.user.findUnique({
                     where: { email: token.email },
                 });
@@ -93,6 +91,7 @@ export const authOptions = {
                                 provider: account.provider,
                                 providerAccountId: account.providerAccountId,
                                 type: account.type,
+                                // @ts-ignore
                                 accessToken: account.access_token,
                                 tokenType: account.token_type,
                                 expiresAt: account.expires_at,
@@ -109,8 +108,7 @@ export const authOptions = {
                             email: token.email,
                             name: token.name,
                             image: token.picture,
-                            // Assuming new fields for password, if applicable
-                            password: "", // Consider how you want to handle this
+                            password: "",
                         },
                     });
                     console.log("[jwt] New user created:", newUser);
@@ -121,6 +119,7 @@ export const authOptions = {
                             provider: account.provider,
                             providerAccountId: account.providerAccountId,
                             type: account.type,
+                            // @ts-ignore
                             accessToken: account.access_token,
                             tokenType: account.token_type,
                             expiresAt: account.expires_at,
@@ -137,7 +136,7 @@ export const authOptions = {
             return token;
         },
 
-        async session({ session, token }) {
+        async session({ session, token }: { session: any; token: any }) {
             console.log("[session] Incoming session:", session);
             console.log("[session] Incoming token:", token);
 
@@ -152,7 +151,7 @@ export const authOptions = {
             return session;
         },
 
-        async redirect({ url, baseUrl }) {
+        async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
             console.log("[redirect] Incoming URL:", url);
             console.log("[redirect] Base URL:", baseUrl);
 
@@ -164,5 +163,6 @@ export const authOptions = {
     },
 };
 
+// @ts-ignore
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

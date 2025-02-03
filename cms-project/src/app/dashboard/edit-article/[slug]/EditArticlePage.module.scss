@@ -1,0 +1,109 @@
+.editContainer {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    margin: 10px;
+  }
+}
+
+.backButton {
+  background-color: #0070f3;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+
+  &:hover {
+    background-color: #005bb5;
+  }
+}
+
+.editTitle {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+  }
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.formGroup label {
+  font-weight: bold;
+  color: #333;
+}
+
+.formGroup input,
+.formGroup textarea,
+.formGroup select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.saveButton {
+  padding: 8px 16px;
+  background-color: #0070f3;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #005bb5;
+  }
+}
+
+.cancelButton {
+  padding: 8px 16px;
+  background-color: #999;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #777;
+  }
+}
+
+.successMessage {
+  color: #28a745;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.errorMessage {
+  color: #dc3545;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}

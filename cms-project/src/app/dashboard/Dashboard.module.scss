@@ -1,0 +1,55 @@
+.dashboardContainer {
+  /* Vizuálně podobné bootstrap .container */
+  max-width: 800px;
+  margin: 40px auto; /* vycentrování na střed */
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.dashboardHeader {
+  margin-bottom: 20px;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+  }
+}
+
+.dashboardCard {
+  /* Nápodoba card se stínem */
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    margin: 10px 0;
+
+    a {
+      text-decoration: none;
+      color: #0070f3;
+
+      &:hover {
+        color: #005bb5;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.logoutWrapper {
+  margin-top: 20px;
+}

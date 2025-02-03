@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
-    "@prisma/client": "^6.2.1",
+    "@prisma/client": "^6.3.0",
     "bcrypt": "^5.1.1",
+    "bootstrap": "^5.3.3",
     "next": "15.1.4",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
+    "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
     "sass": "^1.83.4",
     "slugify": "^1.6.6",
@@ -28,7 +30,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.4",
-    "prisma": "^6.2.1",
+    "prisma": "^6.3.0",
     "typescript": "^5"
   }
 }

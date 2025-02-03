@@ -1,6 +1,6 @@
 "use client";
-
 import { signOut } from "next-auth/react";
+import styles from "./LogoutButton.module.scss";
 
 const LogoutButton = () => {
     const handleLogout = async () => {
@@ -8,7 +8,9 @@ const LogoutButton = () => {
     };
 
     return (
-        <button onClick={handleLogout}>Odhlásit se</button>
+        <button onClick={handleLogout} className={styles.logoutButton}>
+            Odhlásit se
+        </button>
     );
 };
 

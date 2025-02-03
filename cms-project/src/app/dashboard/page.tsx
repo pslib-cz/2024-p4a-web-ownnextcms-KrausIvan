@@ -1,8 +1,10 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import LogoutButton from "../components/LogoutButton";
 import Link from "next/link";
+
+import LogoutButton from "../components/LogoutButton";
+import styles from "./Dashboard.module.scss";
 
 export default async function Dashboard() {
     const session = await getServerSession(authOptions);
@@ -12,13 +14,19 @@ export default async function Dashboard() {
     }
 
     return (
-        <div>
-            <h1>Vítejte, {session.user?.name || "Uživatel"}!</h1>
-            <div>
+        <div className={styles.dashboardContainer}>
+            <div className={styles.dashboardHeader}>
+                <h1>Vítejte, {session.user?.name || "Uživatel"}!</h1>
                 <h2>Správa obsahu</h2>
-                <ul>
+            </div>
+
+            <div className={styles.dashboardCard}>
+                <ul className={styles.navList}>
                     <li>
-                        <Link href="/dashboard/articles">📄 Seznam článků</Link>
+                        <Link href="/articles">📄 Všechny články</Link>
+                    </li>
+                    <li>
+                        <Link href="/dashboard/my-articles">📄 Moje články</Link>
                     </li>
                     <li>
                         <Link href="/dashboard/create-article">✏️ Vytvořit nový článek</Link>
@@ -28,7 +36,10 @@ export default async function Dashboard() {
                     </li>
                 </ul>
             </div>
-            <LogoutButton />
+
+            <div className={styles.logoutWrapper}>
+                <LogoutButton />
+            </div>
         </div>
     );
 }

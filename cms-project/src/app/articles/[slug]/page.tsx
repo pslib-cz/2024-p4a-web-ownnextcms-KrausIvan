@@ -2,9 +2,38 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import styles from "./ArticleDetail.module.scss";
+import { Metadata } from "next";
 
 interface ArticleDetailProps {
     params: { slug: string };
+}
+
+export async function generateMetadata({ params }: ArticleDetailProps): Promise<Metadata> {
+    const article = await prisma.article.findUnique({
+        where: { slug: params.slug },
+        include: {
+            categories: true,
+            author: true,
+        },
+    });
+
+    if (!article) {
+        return {
+            title: "Článek nenalezen | Moje Publikační Platforma",
+            description: "Bohužel tento článek neexistuje.",
+        };
+    }
+
+    return {
+        title: `${article.title} | Moje Publikační Platforma`,
+        description: article.content.slice(0, 150),
+        openGraph: {
+            title: article.title,
+            description: article.content.slice(0, 150),
+            type: "article",
+            url: `/articles/${article.slug}`,
+        },
+    };
 }
 
 export default async function ArticleDetail({ params }: ArticleDetailProps) {
